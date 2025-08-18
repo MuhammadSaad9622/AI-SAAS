@@ -3,6 +3,7 @@ import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import TrustedBy from './components/TrustedBy';
 import Features from './components/Features';
+import AIFeaturesShowcase from './components/AIFeaturesShowcase';
 import HowItWorks from './components/HowItWorks';
 import UseCases from './components/UseCases';
 import Testimonials from './components/Testimonials';
@@ -17,6 +18,18 @@ function App() {
     setShowComingSoon(true);
   };
 
+  const handleLogin = () => {
+    setShowComingSoon(true);
+  };
+
+  const handleStartTrial = () => {
+    setShowComingSoon(true);
+  };
+
+  const handleGetStarted = () => {
+    setShowComingSoon(true);
+  };
+
   const handleBackToHome = () => {
     setShowComingSoon(false);
   };
@@ -27,14 +40,15 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navigation onGetDemo={handleGetDemo} />
-      <Hero />
+      <Navigation onGetDemo={handleGetDemo} onLogin={handleLogin} />
+      <Hero onGetDemo={handleGetDemo} />
       <TrustedBy />
       <Features />
-      <HowItWorks />
+      <AIFeaturesShowcase onGetStarted={handleGetStarted} />
+      <HowItWorks onStartTrial={handleStartTrial} />
       <UseCases />
       <Testimonials />
-      <CallToAction />
+      <CallToAction onGetDemo={handleGetDemo} onStartTrial={handleStartTrial} />
       <Footer />
     </div>
   );

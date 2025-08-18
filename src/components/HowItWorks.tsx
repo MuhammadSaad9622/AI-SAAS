@@ -1,7 +1,11 @@
 import React from 'react';
 import { Play, Brain, Zap, ArrowRight, Sparkles, Rocket, Target } from 'lucide-react';
 
-const HowItWorks: React.FC = () => {
+interface HowItWorksProps {
+  onStartTrial?: () => void;
+}
+
+const HowItWorks: React.FC<HowItWorksProps> = ({ onStartTrial }) => {
   const steps = [
     {
       step: 1,
@@ -131,7 +135,10 @@ const HowItWorks: React.FC = () => {
                 Join thousands of sales teams already using AI to close more deals.
               </p>
               
-              <button className="group bg-gradient-to-r from-purple-500 via-blue-600 to-cyan-500 text-white px-8 sm:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold text-sm sm:text-base hover:scale-110 hover:rotate-1 transition-all duration-300 shadow-2xl shadow-purple-500/25 flex items-center space-x-2 sm:space-x-3 mx-auto hover:shadow-cyan-500/25">
+              <button 
+                onClick={onStartTrial}
+                className="group bg-gradient-to-r from-purple-500 via-blue-600 to-cyan-500 text-white px-8 sm:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold text-sm sm:text-base hover:scale-110 hover:rotate-1 transition-all duration-300 shadow-2xl shadow-purple-500/25 flex items-center space-x-2 sm:space-x-3 mx-auto hover:shadow-cyan-500/25"
+              >
                 <Target className="w-4 h-4 sm:w-5 sm:h-5 group-hover:rotate-45 group-hover:scale-125 transition-transform duration-300" />
                 <span>Start Free Trial</span>
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-2 group-hover:scale-125 transition-transform duration-300" />

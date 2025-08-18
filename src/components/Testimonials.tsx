@@ -29,8 +29,47 @@ const Testimonials: React.FC = () => {
       quote: 'The real-time coaching feature is game-changing. Even our junior reps are performing like seasoned professionals. ROI was immediate and substantial.',
       rating: 5,
       color: 'from-green-400 to-cyan-500'
+    },
+    {
+      name: 'David Kim',
+      role: 'Sales Manager',
+      company: 'InnovateCorp',
+      avatar: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop&crop=face',
+      quote: 'The AI insights have revolutionized how we approach sales. Our conversion rates increased by 35% in just the first quarter.',
+      rating: 5,
+      color: 'from-orange-400 to-red-500'
+    },
+    {
+      name: 'Lisa Wang',
+      role: 'VP of Growth',
+      company: 'ScaleTech',
+      avatar: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop&crop=face',
+      quote: 'We\'ve seen a 50% reduction in follow-up time and our team is more confident than ever. This tool is a game-changer.',
+      rating: 5,
+      color: 'from-indigo-400 to-purple-500'
+    },
+    {
+      name: 'Alex Thompson',
+      role: 'Sales Operations Lead',
+      company: 'DataFlow Inc',
+      avatar: 'https://images.pexels.com/photos/927022/pexels-photo-927022.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop&crop=face',
+      quote: 'The analytics dashboard gives us insights we never had before. Our forecasting accuracy improved by 60% in just two months.',
+      rating: 5,
+      color: 'from-teal-400 to-emerald-500'
+    },
+    {
+      name: 'Maria Garcia',
+      role: 'Enterprise Sales Director',
+      company: 'GlobalTech Solutions',
+      avatar: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop&crop=face',
+      quote: 'Enterprise sales require precision and timing. This AI tool has become our secret weapon for closing big deals.',
+      rating: 5,
+      color: 'from-rose-400 to-pink-500'
     }
   ];
+
+  // Create a duplicated array for seamless infinite scroll
+  const duplicatedTestimonials = [...testimonials, ...testimonials, ...testimonials];
 
   return (
     <section className="py-20 bg-white relative overflow-hidden">
@@ -76,80 +115,97 @@ const Testimonials: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={testimonial.name}
-              className="group relative bg-white rounded-3xl p-8 border-2 border-gray-100 hover:border-pink-300 transition-all duration-500 transform hover:-translate-y-6 hover:scale-105 hover:rotate-1 shadow-lg hover:shadow-2xl hover:shadow-pink-500/20 overflow-hidden"
-              style={{ 
-                animation: `fadeInUp 0.8s ease-out ${index * 0.2}s forwards`,
-                opacity: 0
-              }}
-            >
-              {/* Background Glow */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${testimonial.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-3xl`}></div>
-              
-              {/* Animated Border */}
-              <div className={`absolute inset-0 bg-gradient-to-r ${testimonial.color} rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm`}></div>
-              
-              {/* Quote Icon */}
-              <div className="absolute -top-4 left-8">
-                <div className={`w-12 h-12 bg-gradient-to-r ${testimonial.color} rounded-2xl flex items-center justify-center shadow-2xl shadow-cyan-500/25 animate-bounce group-hover:animate-spin`}>
-                  <Quote className="w-6 h-6 text-white" />
-                </div>
-              </div>
-
-              {/* Stars */}
-              <div className="flex items-center mb-6 mt-8">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star 
-                    key={i} 
-                    className="w-5 h-5 text-yellow-400 fill-current animate-pulse hover:scale-125 transition-transform duration-300" 
-                    style={{ animationDelay: `${i * 0.1}s` }}
-                  />
-                ))}
-              </div>
-
-              {/* Quote */}
-              <blockquote className="text-gray-600 mb-8 leading-relaxed text-lg relative z-10 group-hover:text-gray-700 transition-colors duration-300">
-                "{testimonial.quote}"
-              </blockquote>
-
-              {/* Author */}
-              <div className="flex items-center relative z-10">
-                <div className="relative">
-                  <img
-                    src={testimonial.avatar}
-                    alt={testimonial.name}
-                    className="w-14 h-14 rounded-full object-cover mr-4 border-4 border-gray-200 group-hover:border-cyan-400 group-hover:scale-110 transition-all duration-300"
-                  />
-                  <div className={`absolute inset-0 rounded-full bg-gradient-to-r ${testimonial.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}></div>
-                </div>
-                <div>
-                  <div className="font-semibold text-gray-900 text-lg group-hover:bg-gradient-to-r group-hover:from-cyan-600 group-hover:to-purple-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">{testimonial.name}</div>
-                  <div className="text-sm text-gray-500 group-hover:text-gray-600 transition-colors duration-300">{testimonial.role}</div>
-                  <div className={`text-sm font-medium bg-gradient-to-r ${testimonial.color} bg-clip-text text-transparent`}>
-                    {testimonial.company}
+        {/* Infinite Horizontal Scrolling Testimonials */}
+        <div className="relative overflow-hidden">
+          {/* Left fade overlay */}
+          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+          
+          {/* Right fade overlay */}
+          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+          
+          <div className="flex animate-scroll-horizontal">
+            {duplicatedTestimonials.map((testimonial, index) => (
+              <div
+                key={`${testimonial.name}-${index}`}
+                className="group relative bg-white rounded-3xl p-8 border-2 border-gray-100 hover:border-pink-300 transition-all duration-500 transform hover:-translate-y-6 hover:scale-105 hover:rotate-1 shadow-lg hover:shadow-2xl hover:shadow-pink-500/20 overflow-hidden flex-shrink-0 mx-4"
+                style={{ 
+                  width: '400px',
+                  animation: `fadeInUp 0.8s ease-out ${index * 0.1}s forwards`,
+                  opacity: 0
+                }}
+              >
+                {/* Background Glow */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${testimonial.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-3xl`}></div>
+                
+                {/* Animated Border */}
+                <div className={`absolute inset-0 bg-gradient-to-r ${testimonial.color} rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm`}></div>
+                
+                {/* Quote Icon */}
+                <div className="absolute -top-4 left-8">
+                  <div className={`w-12 h-12 bg-gradient-to-r ${testimonial.color} rounded-2xl flex items-center justify-center shadow-2xl shadow-cyan-500/25 animate-bounce group-hover:animate-spin`}>
+                    <Quote className="w-6 h-6 text-white" />
                   </div>
                 </div>
-              </div>
 
-              {/* Floating Particles */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                {[...Array(10)].map((_, i) => (
-                  <div
-                    key={i}
-                    className={`absolute w-2 h-2 bg-gradient-to-r ${testimonial.color} rounded-full animate-float`}
-                    style={{
-                      left: `${10 + (i * 8)}%`,
-                      top: `${10 + (i * 7)}%`,
-                      animationDelay: `${i * 0.2}s`,
-                    }}
-                  ></div>
-                ))}
+                {/* Stars */}
+                <div className="flex items-center mb-6 mt-8">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star 
+                      key={i} 
+                      className="w-5 h-5 text-yellow-400 fill-current animate-pulse hover:scale-125 transition-transform duration-300" 
+                      style={{ animationDelay: `${i * 0.1}s` }}
+                    />
+                  ))}
+                </div>
+
+                {/* Quote */}
+                <blockquote className="text-gray-600 mb-8 leading-relaxed text-lg relative z-10 group-hover:text-gray-700 transition-colors duration-300">
+                  "{testimonial.quote}"
+                </blockquote>
+
+                {/* Author */}
+                <div className="flex items-center relative z-10">
+                  <div className="relative">
+                    <img
+                      src={testimonial.avatar}
+                      alt={testimonial.name}
+                      className="w-14 h-14 rounded-full object-cover mr-4 border-4 border-gray-200 group-hover:border-cyan-400 group-hover:scale-110 transition-all duration-300"
+                    />
+                    <div className={`absolute inset-0 rounded-full bg-gradient-to-r ${testimonial.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}></div>
+                  </div>
+                  <div>
+                    <div className="font-semibold text-gray-900 text-lg group-hover:bg-gradient-to-r group-hover:from-cyan-600 group-hover:to-purple-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">{testimonial.name}</div>
+                    <div className="text-sm text-gray-500 group-hover:text-gray-600 transition-colors duration-300">{testimonial.role}</div>
+                    <div className={`text-sm font-medium bg-gradient-to-r ${testimonial.color} bg-clip-text text-transparent`}>
+                      {testimonial.company}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Floating Particles */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  {[...Array(10)].map((_, i) => (
+                    <div
+                      key={i}
+                      className={`absolute w-2 h-2 bg-gradient-to-r ${testimonial.color} rounded-full animate-float`}
+                      style={{
+                        left: `${10 + (i * 8)}%`,
+                        top: `${10 + (i * 7)}%`,
+                        animationDelay: `${i * 0.2}s`,
+                      }}
+                    ></div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+
+        {/* Scroll Direction Indicator */}
+        <div className="flex items-center justify-center mt-8 space-x-2 text-gray-400">
+          <div className="w-2 h-2 bg-gray-300 rounded-full animate-pulse"></div>
+          <span className="text-sm font-medium">Scrolls continuously</span>
+          <div className="w-2 h-2 bg-gray-300 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
         </div>
 
         {/* Enhanced Trust Indicators */}
